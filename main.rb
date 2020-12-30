@@ -46,4 +46,4 @@ array_test.my_each_with_index { |e, i| p e, i }
 obj_test.my_each_with_index { |e, i| p e, i }
 
 # Method call for tests Select
-# Method call for tests 
+# Method call for tests all?
