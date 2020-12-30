@@ -47,4 +47,4 @@ Thanks for the both parties involved in the development of this project.
 
 ## 📝 License
 
-This project is [MIT](https://github.com/JohnHernCode/Bubble_Sort_Ruby/blob/main/LICENSE) licensed.
+This project is [MIT](https://github.com/JohnHernCode/Advanced-Building-Blocks-Enumerables/blob/main/LICENSE) licensed.
