@@ -34,6 +34,9 @@ module Enumerable
   end
 
   def my_any?
+    result = false
+    my_each { |e| result = true if yield e }
+    result
   end
 
   def my_none?
@@ -87,3 +90,10 @@ p(array_test.all? { |e| e.is_a?(Integer) })
 
 puts '----------my_all?------------'
 p(array_test.all? { |e| e.is_a?(Integer) })
+
+# Method call for tests any?
+puts '-------Original any?---------'
+p(array_test.any? { |e| e.is_a?(Symbol) })
+
+puts '----------my_any?------------'
+p(array_test.my_any? { |e| e.is_a?(Symbol) })
