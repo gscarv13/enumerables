@@ -21,8 +21,7 @@ module Enumerable
     self
   end
 
-
-
+  
 end
 
 # test variables
