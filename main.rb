@@ -28,6 +28,9 @@ module Enumerable
   end
 
   def my_all?
+    result = true
+    my_each { |e| result = false if yield e == false }
+    result
   end
 
   def my_any?
@@ -56,15 +59,16 @@ puts '------------Original each--------------'
 array_test.each { |e| p e**2 }
 obj_test.each { |e| p e }
 
-puts '-------------This script each-----------'
+puts '--------------my_each------------------'
 array_test.my_each { |e| p e**2 }
 obj_test.my_each { |e| p e }
 
+# Method call for tests each_with_index
 puts '-------Original each with index---------'
 array_test.each_with_index { |e, i| p e, i }
 obj_test.each_with_index { |e, i| p e, i }
 
-puts '----This script each with index---------'
+puts '----my_each_with_index---------'
 array_test.my_each_with_index { |e, i| p e, i }
 obj_test.my_each_with_index { |e, i| p e, i }
 
@@ -73,8 +77,13 @@ puts '-------Original select---------'
 p array_test.select(&:even?)
 p(obj_test.select { |_k, v| v < 2 })
 
-puts '----This script select---------'
+puts '----------my_select------------'
 p array_test.my_select(&:even?)
 p(obj_test.my_select { |_k, v| v < 2 })
 
 # Method call for tests all?
+puts '-------Original select---------'
+p(array_test.all? { |e| e.is_a?(Integer) })
+
+puts '----------my_select------------'
+p(array_test.all? { |e| e.is_a?(Integer) })
