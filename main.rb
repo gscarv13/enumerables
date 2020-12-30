@@ -82,8 +82,8 @@ p array_test.my_select(&:even?)
 p(obj_test.my_select { |_k, v| v < 2 })
 
 # Method call for tests all?
-puts '-------Original select---------'
+puts '-------Original all?---------'
 p(array_test.all? { |e| e.is_a?(Integer) })
 
-puts '----------my_select------------'
+puts '----------my_all?------------'
 p(array_test.all? { |e| e.is_a?(Integer) })
