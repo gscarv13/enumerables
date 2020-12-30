@@ -35,7 +35,12 @@ module Enumerable
 
   def my_any?
     result = false
-    my_each { |e| result = true if yield e }
+    if block_given?
+      my_each { |e| result = true if yield e }
+    else
+      no_block = Proc.new { |e| e }
+      my_each { |_e| result = true if no_block }
+    end
     result
   end
 
@@ -50,7 +55,6 @@ module Enumerable
 
   def my_inject
   end
-
 end
 
 # test variables
@@ -89,7 +93,7 @@ puts '-------Original all?---------'
 p(array_test.all? { |e| e.is_a?(Integer) })
 
 puts '----------my_all?------------'
-p(array_test.all? { |e| e.is_a?(Integer) })
+p(array_test.my_all? { |e| e.is_a?(Integer) })
 
 # Method call for tests any?
 puts '-------Original any?---------'
