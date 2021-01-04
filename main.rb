@@ -67,6 +67,16 @@ module Enumerable
   end
 
   def my_map
+    return to_enum(:my_map) unless block_given?
+
+    ary = []
+    if is_a? Range
+      ary1 = to_a
+      ary1.my_each { |e| ary << (yield e) }
+    else
+      my_each { |e| ary << (yield e) }
+    end
+    ary
   end
 
   def my_inject
@@ -145,3 +155,12 @@ ary = [1, 2, 4, 2]
 p ary.my_count
 p ary.my_count(2)
 p(ary.count { |x| (x % 2).zero? })
+
+# Method call for tests map
+puts '-------Original map---------'
+p((1..4).map { |i| i * i })
+p(array_test.map { |i| i * i })
+
+puts '----------my_map------------'
+p((1..4).my_map { |i| i * i })
+p(array_test.my_map { |i| i * i })
