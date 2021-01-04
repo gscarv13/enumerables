@@ -49,8 +49,7 @@ module Enumerable
     if block_given?
       my_each { |e| result = false if yield e }
     else
-      block = proc { |e| e.nil? || e == false }
-      my_each { |_e| result = false if block }
+      my_each { |e| result = false if e }
     end
     result
   end
