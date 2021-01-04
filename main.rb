@@ -54,7 +54,16 @@ module Enumerable
     result
   end
 
-  def my_count
+  def my_count(int = 0)
+    count = 0
+    if block_given?
+      my_each { |e| count += 1 if yield e }
+    elsif int != 0
+      my_each { |e| count += 1 if e == int }
+    else
+      my_each { |_e| count += 1 }
+    end
+    count
   end
 
   def my_map
@@ -109,17 +118,30 @@ p(array_test.any? { |e| e.is_a?(Symbol) })
 puts '----------my_any?------------'
 p(array_test.my_any? { |e| e.is_a?(Symbol) })
 
-# Method call for tests any?
+# Method call for tests none?
 puts '-------Original none?---------'
 p(array_test.none? { |e| e.is_a?(Symbol) })
-p [].none?                                           
-p [nil].none?                                        
-p [nil, false].none?                                 
-p [nil, false, true].none?   
+p [].none?
+p [nil].none?
+p [nil, false].none?
+p [nil, false, true].none?
 
 puts '----------my_none?------------'
 p(array_test.my_none? { |e| e.is_a?(Symbol) })
-p [].my_none?                                           
-p [nil].my_none?                                        
-p [nil, false].my_none?                                 
-p [nil, false, true].my_none?   
+p [].my_none?
+p [nil].my_none?
+p [nil, false].my_none?
+p [nil, false, true].my_none?
+
+# Method call for tests count
+puts '-------Original count---------'
+ary = [1, 2, 4, 2]
+p ary.count
+p ary.count(2)
+p(ary.count { |x| (x % 2).zero? })
+
+puts '----------my_count------------'
+ary = [1, 2, 4, 2]
+p ary.my_count
+p ary.my_count(2)
+p(ary.count { |x| (x % 2).zero? })
