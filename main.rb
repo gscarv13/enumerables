@@ -38,13 +38,21 @@ module Enumerable
     if block_given?
       my_each { |e| result = true if yield e }
     else
-      no_block = proc.new { |e| e }
-      my_each { |_e| result = true if no_block }
+      block = proc { |e| e }
+      my_each { |_e| result = true if block }
     end
     result
   end
 
   def my_none?
+    result = true
+    if block_given?
+      my_each { |e| result = false if yield e }
+    else
+      block = proc { |e| e.nil? || e == false }
+      my_each { |_e| result = false if block }
+    end
+    result
   end
 
   def my_count
@@ -101,3 +109,18 @@ p(array_test.any? { |e| e.is_a?(Symbol) })
 
 puts '----------my_any?------------'
 p(array_test.my_any? { |e| e.is_a?(Symbol) })
+
+# Method call for tests any?
+puts '-------Original none?---------'
+p(array_test.none? { |e| e.is_a?(Symbol) })
+p [].none?                                           
+p [nil].none?                                        
+p [nil, false].none?                                 
+p [nil, false, true].none?   
+
+puts '----------my_none?------------'
+p(array_test.my_none? { |e| e.is_a?(Symbol) })
+p [].my_none?                                           
+p [nil].my_none?                                        
+p [nil, false].my_none?                                 
+p [nil, false, true].my_none?   
