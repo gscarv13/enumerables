@@ -38,7 +38,7 @@ module Enumerable
     if block_given?
       my_each { |e| result = true if yield e }
     else
-      no_block = Proc.new { |e| e }
+      no_block = proc.new { |e| e }
       my_each { |_e| result = true if no_block }
     end
     result
