@@ -1,13 +1,22 @@
 # Advanced Building Blocks Enumerables- Microverse Ruby Project #2
 
 This is the code for the Microverse Advanced Building Blocks Enumerables Project in the Microverse Ruby Course.
-The goal is to create custom Enumerables methods. 
+The goal is to recreate the following Enumerables methods. 
 
-Additional description about the project and its features.
+1. Each
+2. Each with Index
+3. Select
+4. All?
+5. Any?
+6. None?
+7. Count
+8. Map (also include proc and default to proc if proc and block are input)
+9. Inject (also test inject with multiply_els method)
 
 ## Built With
 
 - Plain Ruby
+- Rubocop
 
 This project was built using plain ruby and its functions are to compare and swap items in an array. 
 
