@@ -66,15 +66,27 @@ module Enumerable
     count
   end
 
-  def my_map
-    return to_enum(:my_map) unless block_given?
+  def my_map(proc_arg)
+    return to_enum(:my_map) unless block_given? || !proc_arg.nil?
 
     ary = []
-    if is_a? Range
-      ary1 = to_a
-      ary1.my_each { |e| ary << (yield e) }
+    if proc_arg.nil?
+      if is_a? Range
+        ary1 = to_a
+        ary1.my_each { |e| ary << (yield e) }
+      else
+        my_each { |e| ary << (yield e) }
+      end
     else
-      my_each { |e| ary << (yield e) }
+
+      if is_a? Range
+        ary1 = to_a
+        ary1.my_each { |e| ary << proc_arg.call(e) }
+      else
+        my_each { |e| ary << proc_arg.call(e) }
+      end
+
+      
     end
     ary
   end
@@ -188,3 +200,6 @@ p(array_test.my_inject { |sum, n| sum + n })
 
 puts '----------multiply_els------------'
 p(multiply_els(array_test))
+
+my_proc = proc { |i| i * i }
+p array_test.my_map(&my_proc) { |i| i * i }
