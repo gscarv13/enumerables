@@ -164,3 +164,12 @@ p(array_test.map { |i| i * i })
 puts '----------my_map------------'
 p((1..4).my_map { |i| i * i })
 p(array_test.my_map { |i| i * i })
+
+# Method call for tests inject
+puts '-------Original inject---------'
+p((5..10).inject { |sum, n| sum + n })
+p(array_test.inject { |sum, n| sum + n })
+
+puts '----------my_inject------------'
+p((5..10).my_inject { |sum, n| sum + n })
+p(array_test.my_inject { |sum, n| sum + n })
