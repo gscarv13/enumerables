@@ -80,6 +80,14 @@ module Enumerable
   end
 
   def my_inject
+    counter = 0
+    if is_a? Range
+      ary1 = to_a
+      ary1.my_each { |e| counter = yield(counter, e) }
+    else
+      my_each { |e| counter = yield(counter, e) }
+    end
+    counter
   end
 end
 
