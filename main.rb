@@ -80,15 +80,19 @@ module Enumerable
   end
 
   def my_inject
-    counter = 0
+    result = 1
     if is_a? Range
       ary1 = to_a
-      ary1.my_each { |e| counter = yield(counter, e) }
+      ary1.my_each { |e| result = yield(result, e) }
     else
-      my_each { |e| counter = yield(counter, e) }
+      my_each { |e| result = yield(result, e) }
     end
-    counter
+    result
   end
+end
+
+def multiply_els(array)
+  array.my_inject { |sum, n| sum * n }
 end
 
 # test variables
@@ -181,3 +185,6 @@ p(array_test.inject { |sum, n| sum + n })
 puts '----------my_inject------------'
 p((5..10).my_inject { |sum, n| sum + n })
 p(array_test.my_inject { |sum, n| sum + n })
+
+puts '----------multiply_els------------'
+p(multiply_els(array_test))
