@@ -13,6 +13,10 @@ The goal is to recreate the following Enumerables methods.
 8. Map (also include proc and default to proc if proc and block are input)
 9. Inject (also test inject with multiply_els method)
 
+## Live Code
+
+[![Run on Repl.it](https://repl.it/badge/github/acushlakoncept/Enumerable)](https://repl.it/@gscarv13/Enumerables#main.rb)
+
 ## Built With
 
 - Plain Ruby
