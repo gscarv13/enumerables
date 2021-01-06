@@ -171,8 +171,6 @@ p(ary.count { |x| (x % 2).zero? })
 puts '-------Original map---------'
 p((1..4).map { |i| i * i })
 p(array_test.map { |i| i * i })
-my_proc = proc { |i| i * i }
-p((1..5).my_map(my_proc) { |i| i * i })
 
 puts '----------my_map------------'
 p((1..4).my_map { |i| i * i })
