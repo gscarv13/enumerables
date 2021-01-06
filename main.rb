@@ -3,8 +3,14 @@ module Enumerable
     return to_enum(:my_each) unless block_given?
 
     i = 0
-    while i < length
-      yield to_a[i]
+    while i < size
+      if is_a? Array
+        yield self[i]
+      elsif is_a? Hash
+        yield keys[i], self[keys[i]]
+      elsif is_a? Range
+        yield to_a[i]
+      end
       i += 1
     end
     self
@@ -23,7 +29,7 @@ module Enumerable
 
   def my_select
     result = []
-    my_each { |e| result << e if yield e }
+    to_a.my_each { |e| result << e if yield e }
     result
   end
 
@@ -71,21 +77,16 @@ module Enumerable
 
     ary = []
     if proc_arg.nil?
-      to_a.my_each { |e| ary << (yield e) }
+      my_each { |e| ary << (yield e) }
     else
-      to_a.my_each { |e| ary << proc_arg.call(e) }
+      my_each { |e| ary << proc_arg.call(e) }
     end
     ary
   end
 
   def my_inject
     result = 1
-    if is_a? Range
-      ary1 = to_a
-      ary1.my_each { |e| result = yield(result, e) }
-    else
-      my_each { |e| result = yield(result, e) }
-    end
+    my_each { |e| result = yield(result, e) }
     result
   end
 end
