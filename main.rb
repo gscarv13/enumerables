@@ -171,10 +171,14 @@ p(ary.count { |x| (x % 2).zero? })
 puts '-------Original map---------'
 p((1..4).map { |i| i * i })
 p(array_test.map { |i| i * i })
+my_proc = proc { |i| i * i }
+p((1..5).my_map(my_proc) { |i| i * i })
 
 puts '----------my_map------------'
 p((1..4).my_map { |i| i * i })
 p(array_test.my_map { |i| i * i })
+my_proc = proc { |i| i * i }
+p((1..5).my_map(my_proc) { |i| i * i })
 
 # Method call for tests inject
 puts '-------Original inject---------'
@@ -185,8 +189,6 @@ puts '----------my_inject------------'
 p((5..10).my_inject { |sum, n| sum + n })
 p(array_test.my_inject { |sum, n| sum + n })
 
+# Method call for multiply_els
 puts '----------multiply_els------------'
 p(multiply_els(array_test))
-
-my_proc = proc { |i| i * i }
-p((1..5).my_map(my_proc) { |i| i * i })
