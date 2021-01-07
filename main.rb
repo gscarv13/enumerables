@@ -198,6 +198,13 @@ p '------inject range---------'
 p range.inject(4) { |prod, n| prod * n }
 p range.my_inject(4) { |prod, n| prod * n }
 
+p array.inject(:+)
+p array.my_inject(:+)
+
+p array_test.inject(:*)
+p array_test.my_inject(:*)
+
+
 =begin
 p '------count range---------'
 p range.count

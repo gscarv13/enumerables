@@ -104,8 +104,13 @@ module Enumerable
     ary
   end
 
-  def my_inject(arg = nil)
+  def my_inject(arg = nil, sym = nil)
     result = 1
+    if arg.is_a?(Symbol)
+      result = 1 if arg.to_s.include?(':*' || ':/')
+      my_each { |e| result = result.public_send arg, e }
+      return result
+    end
     result = arg unless arg.nil?
     my_each { |e| result = yield(result, e) }
     result
