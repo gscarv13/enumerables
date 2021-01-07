@@ -17,10 +17,10 @@ module Enumerable
   end
 
   def my_each_with_index
-    return to_enum(:my_each) unless block_given?
+    return to_enum(:my_each_with_index) unless block_given?
 
     i = 0
-    while i < length
+    while i < size
       yield to_a[i], i
       i += 1
     end
@@ -28,34 +28,47 @@ module Enumerable
   end
 
   def my_select
+    return to_enum(:my_select) unless block_given?
+
     result = []
     to_a.my_each { |e| result << e if yield e }
     result
   end
 
-  def my_all?
+  def my_all?(arg = nil)
     result = true
-    my_each { |e| result = false if yield e == false }
+    if block_given?
+      my_each { |e| result = false unless yield e }
+    elsif arg.nil?
+      block = proc { |e| e.nil? || e == false }
+      my_each { |_e| result = false if block }
+    else
+      block = proc { |e| e == arg }
+      my_each { |_e| result = false unless block }
+    end
     result
   end
 
-  def my_any?
+  def my_any?(arg = nil)
     result = false
     if block_given?
       my_each { |e| result = true if yield e }
+    elsif arg.nil?
+      block = proc { |e| e.nil? || e == false }
+      my_each { |_e| result = true if block }
     else
-      block = proc { |e| e }
+      block = proc { |e| e == arg }
       my_each { |_e| result = true if block }
     end
     result
   end
 
-  def my_none?
+  def my_none?(arg = nil)
     result = true
     if block_given?
       my_each { |e| result = false if yield e }
     else
-      my_each { |e| result = false if e }
+      my_each { |e| result = false if e.is_a?(arg) }
     end
     result
   end

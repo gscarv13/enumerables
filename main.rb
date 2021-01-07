@@ -1,6 +1,6 @@
 require_relative 'enumerables.rb'
 
-# test variables
+=begin test variables
 array_test = [1, 2, 3, 4, 5, 6]
 obj_test = { one: 1, two: 2, three: 3 }
 
@@ -96,3 +96,67 @@ p(array_test.my_inject { |sum, n| sum + n })
 # Method call for multiply_els
 puts '----------multiply_els------------'
 p(multiply_els(array_test))
+=end
+
+ARRAY_SIZE = 100
+LOWEST_VALUE = 0
+HIGHEST_VALUE = 9
+
+array = Array.new(ARRAY_SIZE) { rand(LOWEST_VALUE...HIGHEST_VALUE) }
+block = proc { |num| num < (LOWEST_VALUE + HIGHEST_VALUE) / 2 }
+words = %w[dog door rod blade]
+range = Range.new(5, 50)
+hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+numbers = [1, 2i, 3.14]
+array_clone = array.clone
+true_block = proc { |num| num <= HIGHEST_VALUE }
+false_block = proc { |num| num > HIGHEST_VALUE }
+true_array = [1, 2i, 3.14]
+false_array = [nil, true, 99]
+array_test = [1, 2, 3, 4, 5, 6]
+
+
+p(range.my_each(&block))
+p(range.each(&block))
+p '------------------------------------'
+p(range.my_select(&block))
+p(range.select(&block))
+p '------------------------------------'
+p(range.all?(&false_block))
+p(range.my_all?(&false_block))
+p '------------------------------------'
+p(array.all? { |num| num + 1 })
+p(array.my_all? { |num| num + 1 })
+p '------------------------------------'
+p true_array.all?(Numeric)
+p(true_array.my_all?(Numeric))
+p '------------------------------------'
+p false_array.all?
+p(false_array.my_all?)
+p '------------------------------------'
+p array.all?(Integer)
+p(array.my_all?(Integer))
+p '----------------words--------------------'
+p words.all?(/d/)
+p(words.my_all?(/d/))
+p '----------------dont know--------------------'
+p array.all?(3)
+p(array.my_all?(3))
+p '----------------------any--------------'
+p(range.any?(&false_block))
+p(range.my_any?(&false_block))
+p '----------------------any false--------------'
+p false_array.any?
+p(false_array.my_any?)
+p '----------------------any true--------------'
+p true_array.any?(Numeric)
+p(true_array.my_any?(Numeric))
+p '----------------------none string--------------'
+p array.none?(String)
+p(array.my_none?(String))
+p '------none numeric---------'
+p array.none?(Numeric)
+p(array.my_none?(Numeric))
+
+p words.none?(/z/)
+p(words.my_none?(/z/))
