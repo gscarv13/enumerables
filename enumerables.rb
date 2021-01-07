@@ -1,3 +1,4 @@
+# rubocop: disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
@@ -39,12 +40,13 @@ module Enumerable
     result = true
     if block_given?
       my_each { |e| result = false unless yield e }
-    elsif arg.nil?
-      block = proc { |e| e.nil? || e == false }
-      my_each { |_e| result = false if block }
+    elsif arg.is_a?(Class) && arg.class != Regexp
+      my_each { |e| result = false unless e.is_a?(arg) }
+    elsif arg.is_a?(Regexp)
+      my_each { |e| result = false unless e.match(arg) }
     else
       block = proc { |e| e == arg }
-      my_each { |_e| result = false unless block }
+      my_each { |_e| result = false unless block.call }
     end
     result
   end
@@ -55,7 +57,7 @@ module Enumerable
       my_each { |e| result = true if yield e }
     elsif arg.nil?
       block = proc { |e| e.nil? || e == false }
-      my_each { |_e| result = true if block }
+      my_each { |_e| result = true if block.call }
     else
       block = proc { |e| e == arg }
       my_each { |_e| result = true if block }
@@ -67,8 +69,10 @@ module Enumerable
     result = true
     if block_given?
       my_each { |e| result = false if yield e }
-    else
+    elsif arg.is_a?(Class) && arg.class != Regexp
       my_each { |e| result = false if e.is_a?(arg) }
+    else
+      my_each { |e| result = false unless e }
     end
     result
   end
@@ -107,3 +111,5 @@ end
 def multiply_els(array)
   array.my_inject { |sum, n| sum * n }
 end
+
+# rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
