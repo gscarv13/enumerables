@@ -1,4 +1,4 @@
-require_relative 'enumerables.rb'
+require_relative 'enumerables'
 
 =begin test variables
 array_test = [1, 2, 3, 4, 5, 6]
@@ -106,6 +106,7 @@ array = Array.new(ARRAY_SIZE) { rand(LOWEST_VALUE...HIGHEST_VALUE) }
 block = proc { |num| num < (LOWEST_VALUE + HIGHEST_VALUE) / 2 }
 words = %w[dog door rod blade]
 range = Range.new(5, 50)
+search = proc { |memo, word| memo.length > word.length ? memo : word }
 hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
 numbers = [1, 2i, 3.14]
 array_clone = array.clone
@@ -136,9 +137,12 @@ p(false_array.my_all?)
 p '----------------all Integer class--------------------'
 p array.all?(Integer)
 p(array.my_all?(Integer))
-p '----------------all Regex--------------------'
+p '----------------all true Regex--------------------'
 p words.all?(/d/)
 p(words.my_all?(/d/))
+p '----------------all false Regex--------------------'
+p words.all?(/o/)
+p(words.my_all?(/o/))
 p '----------------all input pattern--------------------'
 p array_test.all?(3)
 p(array_test.my_all?(3))
@@ -162,16 +166,39 @@ p words.any?(/z/)
 p(words.my_any?(/z/))
 p '----------------any input pattern--------------------'
 p words.any?('cat')
-p(words.my_any?('cat'))
+p words.my_any?('cat')
+p '----------------------none range--------------'
+p range.none?(&false_block)
+p range.my_none?(&false_block)
 p '----------------------none string--------------'
 p array.none?(String)
-p(array.my_none?(String))
-p '------none numeric---------'
+p array.my_none?(String)
+p '------none Numeric class---------'
 p array.none?(Numeric)
-p(array.my_none?(Numeric))
-p '------none regex---------'
+p array.my_none?(Numeric)
+p '------none String class---------'
+p array.none?(String)
+p array.my_none?(String)
+p '------none true regex---------'
 p words.none?(/z/)
-p(words.my_none?(/z/))
+p words.my_none?(/z/)
+p '------none false regex---------'
+p words.none?(/d/)
+p words.my_none?(/d/)
 p '------none pattern---------'
 p words.none?(5)
-p(words.my_none?(5))
+p words.my_none?(5)
+p '------count range---------'
+p range.count
+p range.my_count
+p '------count array---------'
+p array.count(LOWEST_VALUE)
+p array.my_count(LOWEST_VALUE)
+
+=begin
+p '------count range---------'
+p range.count
+p range.my_count
+
+
+=end

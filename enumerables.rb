@@ -72,6 +72,8 @@ module Enumerable
       my_each { |e| result = false if yield e }
     elsif arg.is_a?(Class) && arg.class != Regexp
       my_each { |e| result = false if e.is_a?(arg) }
+    elsif arg.is_a?(Regexp)
+      my_each { |e| result = false if e.match(arg) }
     else
       my_each { |e| result = false unless e }
     end
