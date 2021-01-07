@@ -115,48 +115,63 @@ true_array = [1, 2i, 3.14]
 false_array = [nil, true, 99]
 array_test = [1, 2, 3, 4, 5, 6]
 
-
+p '-------------------each range-----------------'
 p(range.my_each(&block))
 p(range.each(&block))
-p '------------------------------------'
+p '-------------------select range-----------------'
 p(range.my_select(&block))
 p(range.select(&block))
-p '------------------------------------'
+p '----------------all range--------------------'
 p(range.all?(&false_block))
 p(range.my_all?(&false_block))
-p '------------------------------------'
+p '---------------- all array--------------------'
 p(array.all? { |num| num + 1 })
 p(array.my_all? { |num| num + 1 })
-p '------------------------------------'
+p '--------------all Numeric class----------------------'
 p true_array.all?(Numeric)
 p(true_array.my_all?(Numeric))
-p '------------------------------------'
+p '----------------all false Array--------------------'
 p false_array.all?
 p(false_array.my_all?)
-p '------------------------------------'
+p '----------------all Integer class--------------------'
 p array.all?(Integer)
 p(array.my_all?(Integer))
-p '----------------words--------------------'
+p '----------------all Regex--------------------'
 p words.all?(/d/)
 p(words.my_all?(/d/))
-p '----------------dont know--------------------'
-p array.all?(3)
-p(array.my_all?(3))
-p '----------------------any--------------'
+p '----------------all input pattern--------------------'
+p array_test.all?(3)
+p(array_test.my_all?(3))
+p '----------------------any false block--------------'
 p(range.any?(&false_block))
 p(range.my_any?(&false_block))
-p '----------------------any false--------------'
+p '----------------------any false array--------------'
 p false_array.any?
 p(false_array.my_any?)
-p '----------------------any true--------------'
+p '----------------------any true array--------------'
 p true_array.any?(Numeric)
 p(true_array.my_any?(Numeric))
+p '----------------------any words array--------------'
+p words.any?(Integer)
+p(words.my_any?(Integer))
+p '----------------any Regex--------------------'
+p words.any?(/d/)
+p(words.my_any?(/d/))
+p '----------------any false Regex--------------------'
+p words.any?(/z/)
+p(words.my_any?(/z/))
+p '----------------any input pattern--------------------'
+p words.any?('cat')
+p(words.my_any?('cat'))
 p '----------------------none string--------------'
 p array.none?(String)
 p(array.my_none?(String))
 p '------none numeric---------'
 p array.none?(Numeric)
 p(array.my_none?(Numeric))
-
+p '------none regex---------'
 p words.none?(/z/)
 p(words.my_none?(/z/))
+p '------none pattern---------'
+p words.none?(5)
+p(words.my_none?(5))

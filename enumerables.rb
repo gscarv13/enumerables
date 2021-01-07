@@ -55,12 +55,13 @@ module Enumerable
     result = false
     if block_given?
       my_each { |e| result = true if yield e }
-    elsif arg.nil?
-      block = proc { |e| e.nil? || e == false }
-      my_each { |_e| result = true if block.call }
+    elsif arg.is_a?(Class) && arg.class != Regexp
+      my_each { |e| result = true if e.is_a?(arg) }
+    elsif arg.is_a?(Regexp)
+      my_each { |e| result = true if e.match(arg) }
     else
       block = proc { |e| e == arg }
-      my_each { |_e| result = true if block }
+      my_each { |_e| result = true if block.call }
     end
     result
   end
