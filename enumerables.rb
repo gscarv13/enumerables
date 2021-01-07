@@ -107,7 +107,11 @@ module Enumerable
   def my_inject(arg = nil)
     result = 1
     result = arg unless arg.nil?
-    my_each { |e| result = yield(result, e) }
+    if block_given?
+      my_each { |e| result = yield(result, e) }      
+    else
+      my_each { |e| result = [result, e]}
+    end
     result
   end
 end

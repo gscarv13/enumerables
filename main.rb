@@ -197,11 +197,6 @@ p words.my_count(search)
 p '------inject range---------'
 p range.inject(4) { |prod, n| prod * n }
 p range.my_inject(4) { |prod, n| prod * n }
-
-=begin
-p '------count range---------'
-p range.count
-p range.my_count
-
-
-=end
+p '------inject array with + ---------'
+p array.inject(:+)
+p array.my_inject(:+)
