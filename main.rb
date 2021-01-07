@@ -158,12 +158,9 @@ p(true_array.my_any?(Numeric))
 p '----------------------any words array--------------'
 p words.any?(Integer)
 p(words.my_any?(Integer))
-p '----------------any Regex--------------------'
+p '-----------  -----any Regex--------------------'
 p words.any?(/d/)
 p(words.my_any?(/d/))
-p '----------------any false Regex--------------------'
-p words.any?(/z/)
-p(words.my_any?(/z/))
 p '----------------any input pattern--------------------'
 p words.any?('cat')
 p words.my_any?('cat')
@@ -194,6 +191,12 @@ p range.my_count
 p '------count array---------'
 p array.count(LOWEST_VALUE)
 p array.my_count(LOWEST_VALUE)
+p '------inject search---------'
+p words.count(search)
+p words.my_count(search)
+p '------inject range---------'
+p range.inject(4) { |prod, n| prod * n }
+p range.my_inject(4) { |prod, n| prod * n }
 
 =begin
 p '------count range---------'

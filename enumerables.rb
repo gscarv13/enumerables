@@ -80,11 +80,11 @@ module Enumerable
     result
   end
 
-  def my_count(int = 0)
+  def my_count(int = nil)
     count = 0
     if block_given?
       my_each { |e| count += 1 if yield e }
-    elsif int != 0
+    elsif !int.nil?
       my_each { |e| count += 1 if e == int }
     else
       my_each { |_e| count += 1 }
@@ -104,8 +104,9 @@ module Enumerable
     ary
   end
 
-  def my_inject
+  def my_inject(arg = nil)
     result = 1
+    result = arg unless arg.nil?
     my_each { |e| result = yield(result, e) }
     result
   end
