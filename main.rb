@@ -105,10 +105,6 @@ block = proc { |num| num < (LOWEST_VALUE + HIGHEST_VALUE) / 2 }
 words = %w[dog door rod blade]
 range = Range.new(5, 50)
 search = proc { |memo, word| memo.length > word.length ? memo : word }
-hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
-numbers = [1, 2i, 3.14]
-array_clone = array.clone
-true_block = proc { |num| num <= HIGHEST_VALUE }
 false_block = proc { |num| num > HIGHEST_VALUE }
 true_array = [1, 2i, 3.14]
 false_array = [nil, true, 99]
@@ -234,11 +230,9 @@ p words.my_none?('dog')
 # p [1, 2, 3].my_inject
 
 p '---------------this is words length---------'
-p words.inject(['']){ |a,w| [a + [w], [w], a][w.length <=> a.last.length] }
-p words.my_inject(['']){ |a,w| [a + [w], [w], a][w.length <=> a.last.length] }
-
-
+p words.inject(['']) { |a, w| [a + [w], [w], a][w.length <=> a.last.length] }
+p words.my_inject(['']) { |a, w| [a + [w], [w], a][w.length <=> a.last.length] }
 
 p '---------------this is---------'
-p(range.inject() { |prod, n| prod * n })
-p(range.my_inject() { |prod, n| prod * n })
+p(range.inject { |prod, n| prod * n })
+p(range.my_inject { |prod, n| prod * n })

@@ -79,7 +79,7 @@ module Enumerable
     elsif arg.nil?
       my_each { |e| result = false if e }
     else
-      my_each { |e| result = false unless e == arg }
+      my_each { |e| result = false if e == arg }
     end
     result
   end
@@ -108,22 +108,20 @@ module Enumerable
     ary
   end
 
-  def my_inject(arg = nil, sym = nil)
-    result = 0
+  def my_inject(arg = nil, sym = nil, &block)
     if block_given?
       result = arg unless arg.nil?
-      my_each { |e| result = yield(result, e) }
+      my_each { |e| result = result.nil? ? result = e : yield(result, e) }
       result
     elsif arg.is_a?(Symbol)
-      result = 1 if arg.to_s.include?('*' || '/')
-      my_each { |e| result = result.public_send arg, e }
+      my_each { |e| result = result.nil? ? result = e : result.public_send(arg, e) }
       result
     elsif arg.is_a?(Numeric) && sym.is_a?(Symbol)
       result = arg
       my_each { |e| result = result.public_send sym, e }
       result
     else
-      my_each { |e| yield }
+      my_each { |_e| block.call }
     end
   end
 end
