@@ -204,11 +204,15 @@ p array.my_inject(:+)
 p array_test.inject(:*)
 p array_test.my_inject(:*)
 
+p '-----------array----------'
+
+p array.inject(20, :*)
+p '----------- ours-------------'
+p(array.my_inject(20, :*))
 
 =begin
 p '------count range---------'
 p range.count
 p range.my_count
 
-
-=end
+=end 
