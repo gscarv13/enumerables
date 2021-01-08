@@ -44,6 +44,9 @@ module Enumerable
       my_each { |e| result = false unless e.is_a?(arg) }
     elsif arg.is_a?(Regexp)
       my_each { |e| result = false unless e.match(arg) }
+    elsif arg.nil?
+      block = proc { |e| e.nil? || e == false }
+      my_each { |_e| result = false if block.call }
     else
       block = proc { |e| e == arg }
       my_each { |_e| result = false unless block.call }
