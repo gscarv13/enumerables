@@ -210,6 +210,7 @@ p array.inject(20, :*)
 p '----------- ours-------------'
 p(array.my_inject(20, :*))
 
+p [nil, false, true].my_none?
 =begin
 p '------count range---------'
 p range.count

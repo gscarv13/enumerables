@@ -77,6 +77,8 @@ module Enumerable
       my_each { |e| result = false if e.is_a?(arg) }
     elsif arg.is_a?(Regexp)
       my_each { |e| result = false if e.match(arg) }
+    elsif arg.nil?
+      my_each { |e| result = false if e }
     else
       my_each { |e| result = false unless e }
     end
