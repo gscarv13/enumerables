@@ -96,6 +96,7 @@ p(array_test.my_inject { |sum, n| sum + n })
 puts '----------multiply_els------------'
 p(multiply_els(array_test))
 
+
 ARRAY_SIZE = 100
 LOWEST_VALUE = 0
 HIGHEST_VALUE = 9
@@ -105,39 +106,46 @@ block = proc { |num| num < (LOWEST_VALUE + HIGHEST_VALUE) / 2 }
 words = %w[dog door rod blade]
 range = Range.new(5, 50)
 search = proc { |memo, word| memo.length > word.length ? memo : word }
+hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+numbers = [1, 2i, 3.14]
+array_clone = array.clone
+true_block = proc { |num| num <= HIGHEST_VALUE }
 false_block = proc { |num| num > HIGHEST_VALUE }
 true_array = [1, 2i, 3.14]
 false_array = [nil, true, 99]
 array_test = [1, 2, 3, 4, 5, 6]
 
-p '-------------------each range-----------------'
+p '----------------------each range-----------------'
 p(range.my_each(&block))
 p(range.each(&block))
-p '-------------------select range-----------------'
+p '----------------------select range-----------------'
 p(range.my_select(&block))
 p(range.select(&block))
-p '----------------all range--------------------'
+p '----------------------all range--------------------'
 p(range.all?(&false_block))
 p(range.my_all?(&false_block))
-p '---------------- all array--------------------'
+p '----------------------all array--------------------'
 p(array.all? { |num| num + 1 })
 p(array.my_all? { |num| num + 1 })
-p '--------------all Numeric class----------------------'
+p '----------------------all Numeric class----------------------'
 p true_array.all?(Numeric)
 p(true_array.my_all?(Numeric))
-p '----------------all false Array--------------------'
+p '----------------------all true array----------------------'
+p true_array.all?
+p(true_array.my_all?)
+p '----------------------all false Array--------------------'
 p false_array.all?
 p(false_array.my_all?)
-p '----------------all Integer class--------------------'
+p '----------------------all Integer class--------------------'
 p array.all?(Integer)
 p(array.my_all?(Integer))
-p '----------------all true Regex--------------------'
+p '----------------------all true Regex--------------------'
 p words.all?(/d/)
 p(words.my_all?(/d/))
-p '----------------all false Regex--------------------'
+p '----------------------all false Regex--------------------'
 p words.all?(/o/)
 p(words.my_all?(/o/))
-p '----------------all input pattern--------------------'
+p '----------------------all input pattern--------------------'
 p array_test.all?(3)
 p(array_test.my_all?(3))
 p '----------------------any false block--------------'
@@ -152,10 +160,10 @@ p(true_array.my_any?(Numeric))
 p '----------------------any words array--------------'
 p words.any?(Integer)
 p(words.my_any?(Integer))
-p '-----------  -----any Regex--------------------'
+p '----------------------any Regex--------------------'
 p words.any?(/d/)
 p(words.my_any?(/d/))
-p '----------------any input pattern--------------------'
+p '----------------------any input pattern--------------------'
 p words.any?('cat')
 p words.my_any?('cat')
 p '----------------------none range--------------'
@@ -164,42 +172,65 @@ p range.my_none?(&false_block)
 p '----------------------none string--------------'
 p array.none?(String)
 p array.my_none?(String)
-p '------none Numeric class---------'
+p '----------------------none Numeric class---------'
 p array.none?(Numeric)
 p array.my_none?(Numeric)
-p '------none String class---------'
+p '----------------------none String class---------'
 p array.none?(String)
 p array.my_none?(String)
-p '------none true regex---------'
+p '----------------------none true regex---------'
 p words.none?(/z/)
 p words.my_none?(/z/)
-p '------none false regex---------'
+p '----------------------none false regex---------'
 p words.none?(/d/)
 p words.my_none?(/d/)
-p '------none pattern---------'
+p '----------------------none pattern---------'
 p words.none?(5)
 p words.my_none?(5)
-p '------count range---------'
+p '----------------------count range---------'
 p range.count
 p range.my_count
-p '------count array---------'
+p '----------------------count array---------'
 p array.count(LOWEST_VALUE)
 p array.my_count(LOWEST_VALUE)
-p '------inject search---------'
+p '----------------------inject search---------'
 p words.count(search)
 p words.my_count(search)
-p '------inject range---------'
+p '----------------------inject range---------'
 p range.inject(4) { |prod, n| prod * n }
 p range.my_inject(4) { |prod, n| prod * n }
-p '------inject symbol +---------'
+p '----------------------inject symbol +---------'
 p array.inject(:+)
 p array.my_inject(:+)
-p '------inject symbol *---------'
+p '----------------------inject symbol *---------'
 p array_test.inject(:*)
 p array_test.my_inject(:*)
-p '---------array inject 2 args----------'
+p '----------------------array inject 2 args----------'
 p array_test.inject(20, :*)
 p array_test.my_inject(20, :*)
-p '-----------array range 2 args----------'
+p '----------------------array range 2 args----------'
 p range.inject(2, :*)
 p(range.my_inject(2, :*))
+=begin
+
+
+p '---------------------------array all? true----------'
+p [true, true].all?
+p [true, true].my_all?
+p '---------------------------array all? pattern----------'
+p [1, 1].all?(1)
+p [1, 1].my_all?(1)
+p '---------------------------array any?----------'
+p [nil, nil].any?
+p [nil, nil].my_any?
+p '---------------------------array any? pattern----------'
+p [1, 2, 3].any?(2)
+p [1, 2, 3].my_any?(2)
+p '---------------------------array none false pattern----------'
+p words.none?('dog')
+p words.my_none?('dog')
+
+#p [1,2,3].inject
+#p [1,2,3].my_inject
+
+=end
