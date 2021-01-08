@@ -96,7 +96,6 @@ p(array_test.my_inject { |sum, n| sum + n })
 puts '----------multiply_els------------'
 p(multiply_els(array_test))
 
-
 ARRAY_SIZE = 100
 LOWEST_VALUE = 0
 HIGHEST_VALUE = 9
@@ -211,12 +210,11 @@ p array_test.my_inject(20, :*)
 p '----------------------array range 2 args----------'
 p range.inject(2, :*)
 p(range.my_inject(2, :*))
-=begin
-
 
 p '---------------------------array all? true----------'
 p [true, true].all?
 p [true, true].my_all?
+
 p '---------------------------array all? pattern----------'
 p [1, 1].all?(1)
 p [1, 1].my_all?(1)
@@ -226,11 +224,21 @@ p [nil, nil].my_any?
 p '---------------------------array any? pattern----------'
 p [1, 2, 3].any?(2)
 p [1, 2, 3].my_any?(2)
+
 p '---------------------------array none false pattern----------'
 p words.none?('dog')
 p words.my_none?('dog')
 
-#p [1,2,3].inject
-#p [1,2,3].my_inject
+# p '---------------this is this---------'
+# p [1,2,3].inject
+# p [1, 2, 3].my_inject
 
-=end
+p '---------------this is words length---------'
+p words.inject(['']){ |a,w| [a + [w], [w], a][w.length <=> a.last.length] }
+p words.my_inject(['']){ |a,w| [a + [w], [w], a][w.length <=> a.last.length] }
+
+
+
+p '---------------this is---------'
+p(range.inject() { |prod, n| prod * n })
+p(range.my_inject() { |prod, n| prod * n })

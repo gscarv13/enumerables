@@ -8,7 +8,7 @@ module Enumerable
       if is_a? Array
         yield self[i]
       elsif is_a? Hash
-        yield keys[i], self[keys[i]]
+        yield [keys[i], self[keys[i]]]
       elsif is_a? Range
         yield to_a[i]
       end
@@ -45,11 +45,9 @@ module Enumerable
     elsif arg.is_a?(Regexp)
       my_each { |e| result = false unless e.match(arg) }
     elsif arg.nil?
-      block = proc { |e| e.nil? || e == false }
-      my_each { |_e| result = false if block.call }
+      my_each { |e| result = false if e.nil? || e == false }
     else
-      block = proc { |e| e == arg }
-      my_each { |_e| result = false unless block.call }
+      my_each { |e| result = false unless e == arg }
     end
     result
   end
@@ -62,9 +60,10 @@ module Enumerable
       my_each { |e| result = true if e.is_a?(arg) }
     elsif arg.is_a?(Regexp)
       my_each { |e| result = true if e.match(arg) }
+    elsif arg.nil?
+      my_each { |e| result = false if e.nil? || e == false }
     else
-      block = proc { |e| e == arg }
-      my_each { |_e| result = true if block.call }
+      my_each { |e| result = true if e == arg }
     end
     result
   end
@@ -80,7 +79,7 @@ module Enumerable
     elsif arg.nil?
       my_each { |e| result = false if e }
     else
-      my_each { |e| result = false unless e }
+      my_each { |e| result = false unless e == arg }
     end
     result
   end
@@ -110,23 +109,22 @@ module Enumerable
   end
 
   def my_inject(arg = nil, sym = nil)
-    result = 1
-    if arg.is_a?(Symbol)
+    result = 0
+    if block_given?
+      result = arg unless arg.nil?
+      my_each { |e| result = yield(result, e) }
+      result
+    elsif arg.is_a?(Symbol)
       result = 1 if arg.to_s.include?('*' || '/')
       my_each { |e| result = result.public_send arg, e }
-      return result
+      result
     elsif arg.is_a?(Numeric) && sym.is_a?(Symbol)
       result = arg
       my_each { |e| result = result.public_send sym, e }
-      return result
-    end
-    result = arg unless arg.nil?
-    if block_given?
-      my_each { |e| result = yield(result, e) }
+      result
     else
-      my_each { |e| result = [result, e] }
+      my_each { |e| yield }
     end
-    result
   end
 end
 
