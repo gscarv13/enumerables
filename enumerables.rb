@@ -115,6 +115,10 @@ module Enumerable
       result = 1 if arg.to_s.include?('*' || '/')
       my_each { |e| result = result.public_send arg, e }
       return result
+    elsif arg.is_a?(Numeric) && sym.is_a?(Symbol)
+      result = arg
+      my_each { |e| result = result.public_send sym, e }
+      return result
     end
     result = arg unless arg.nil?
     if block_given?

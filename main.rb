@@ -1,6 +1,5 @@
 require_relative 'enumerables'
 
-=begin test variables
 array_test = [1, 2, 3, 4, 5, 6]
 obj_test = { one: 1, two: 2, three: 3 }
 
@@ -96,7 +95,6 @@ p(array_test.my_inject { |sum, n| sum + n })
 # Method call for multiply_els
 puts '----------multiply_els------------'
 p(multiply_els(array_test))
-=end
 
 ARRAY_SIZE = 100
 LOWEST_VALUE = 0
@@ -107,10 +105,6 @@ block = proc { |num| num < (LOWEST_VALUE + HIGHEST_VALUE) / 2 }
 words = %w[dog door rod blade]
 range = Range.new(5, 50)
 search = proc { |memo, word| memo.length > word.length ? memo : word }
-hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
-numbers = [1, 2i, 3.14]
-array_clone = array.clone
-true_block = proc { |num| num <= HIGHEST_VALUE }
 false_block = proc { |num| num > HIGHEST_VALUE }
 true_array = [1, 2i, 3.14]
 false_array = [nil, true, 99]
@@ -197,23 +191,15 @@ p words.my_count(search)
 p '------inject range---------'
 p range.inject(4) { |prod, n| prod * n }
 p range.my_inject(4) { |prod, n| prod * n }
-
+p '------inject symbol +---------'
 p array.inject(:+)
 p array.my_inject(:+)
-
+p '------inject symbol *---------'
 p array_test.inject(:*)
 p array_test.my_inject(:*)
-
-p '-----------array----------'
-
-p array.inject(20, :*)
-p '----------- ours-------------'
-p(array.my_inject(20, :*))
-
-p [nil, false, true].my_none?
-=begin
-p '------count range---------'
-p range.count
-p range.my_count
-
-=end 
+p '---------array inject 2 args----------'
+p array_test.inject(20, :*)
+p array_test.my_inject(20, :*)
+p '-----------array range 2 args----------'
+p range.inject(2, :*)
+p(range.my_inject(2, :*))
