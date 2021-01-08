@@ -225,10 +225,6 @@ p '---------------------------array none false pattern----------'
 p words.none?('dog')
 p words.my_none?('dog')
 
-# p '---------------this is this---------'
-# p [1,2,3].inject
-# p [1, 2, 3].my_inject
-
 p '---------------this is words length---------'
 p words.inject(['']) { |a, w| [a + [w], [w], a][w.length <=> a.last.length] }
 p words.my_inject(['']) { |a, w| [a + [w], [w], a][w.length <=> a.last.length] }
