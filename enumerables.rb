@@ -1,4 +1,4 @@
-# rubocop: disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/ModuleLength
+# rubocop: disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/ModuleLength, Style/ExplicitBlockArgument
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
@@ -61,7 +61,7 @@ module Enumerable
     elsif arg.is_a?(Regexp)
       my_each { |e| result = true if e.match(arg) }
     elsif arg.nil?
-      my_each { |e| result = false if e.nil? || e == false }
+      my_each { |e| result = true if e.nil? || e == false }
     else
       my_each { |e| result = true if e == arg }
     end
@@ -108,7 +108,7 @@ module Enumerable
     ary
   end
 
-  def my_inject(arg = nil, sym = nil, &block)
+  def my_inject(arg = nil, sym = nil)
     if block_given?
       result = arg unless arg.nil?
       my_each { |e| result = result.nil? ? result = e : yield(result, e) }
@@ -121,7 +121,7 @@ module Enumerable
       my_each { |e| result = result.public_send sym, e }
       result
     else
-      my_each { |_e| block.call }
+      my_each { |e| yield e }
     end
   end
 end
@@ -130,4 +130,4 @@ def multiply_els(array)
   array.my_inject { |sum, n| sum * n }
 end
 
-# rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/ModuleLength
+# rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/ModuleLength, Style/ExplicitBlockArgument
