@@ -112,11 +112,32 @@ describe 'Enumerables' do
     it 'It checks if the current element is a symbol' do
       expect(array2.my_none? { |e| e.is_a?(Symbol) }).to eq(array2.none? { |e| e.is_a?(Symbol) })
     end
+    it 'It checks if the range has no matches with given block' do
+      expect(range.my_none?(&false_block)).to eq(range.none?(&false_block))
+    end
+    it 'It returns true if no strings' do
+      expect(array2.my_none?(String)).to eq(array2.none?(String))
+    end
+    it 'It returns false if numeric class is found' do
+      expect(array2.my_none?(Numeric)).to eq(array2.none?(Numeric))
+    end
+    it 'It returns true if no regex is found' do
+      expect(words.my_none?(/z/)).to eq(words.none?(/z/))
+    end
+    it 'It returns false if regex is found' do
+      expect(words.my_none?(/d/)).to eq(words.none?(/d/))
+    end
+    it 'It returns true if the pattern is not found' do
+      expect(words.my_none?(5)).to eq(words.none?(5))
+    end
   end
 
   describe '#my_count' do
     it 'It counts how many elements correspond to the given argument' do
       expect(array2.my_count(2)).to eq(array2.count(2))
+    end
+    it 'It returns the total number of elements in the range' do
+      expect(range.my_count).to eq(range.count)
     end
   end
 
@@ -124,7 +145,6 @@ describe 'Enumerables' do
     it 'Create a new array from multplying all range elements' do
       expect(range.my_map { |i| i * i }).to eq(range.map { |i| i * i })
     end
-
     it 'Create a new array from multplying all range elements' do
       expect(array2.my_map { |i| i + i }).to eq(array2.map { |i| i + i })
     end
