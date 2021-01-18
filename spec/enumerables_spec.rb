@@ -21,7 +21,7 @@ describe 'Enumerables' do
 
   describe '#my each' do
     it 'Loop through the array and multiply each element' do
-      expect(array2.my_each { |i| i * i }).to be(array2.each { |i| i * i })
+      expect(array2.my_each { |i| p i }).to be(array2.each { |i| p i })
     end
   end
 
