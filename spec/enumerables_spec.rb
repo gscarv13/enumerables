@@ -38,5 +38,38 @@ describe 'Enumerables' do
     it 'Select even numbers' do
       expect(array2.my_select(&:even?)).to eq(array2.select(&:even?))
     end
+    it 'My_select range block should be equal to select block' do
+      expect(range.my_select(&block)).to eq(range.select(&block))
+    end
+  end
+
+  describe '#my_all' do
+    it 'It checks all the elements in the array' do
+      expect(array2.my_all? { |e| e.is_a?(Integer) }).to eq(array2.all? { |e| e.is_a?(Integer) })
+    end
+  end
+
+  describe '#my_any' do
+    it 'It is checking if there are any symbols' do
+      expect(array2.my_any? { |e| e.is_a?(Symbol) }).to eq(array2.any? { |e| e.is_a?(Symbol) })
+    end
+    it 'Checks if there is any false block' do
+      expect(range.my_any?(&false_block)).to eq(range.any?(&false_block))
+    end
+    it 'Checks if there is a false array' do
+      expect(false_array.my_any?).to eq(false_array.any?)
+    end
+  end
+
+  describe 'my_none' do
+    it 'It checks if the current element is a symbol' do
+      expect(array2.my_none? { |e| e.is_a?(Symbol) }).to eq(array2.none? { |e| e.is_a?(Symbol) })
+    end
+  end
+  
+  describe 'my_count' do
+    it 'It counts how many elements correspond to the given argument' do
+      expect(array2.my_count(2)).to eq(array2.count(2))
+    end
   end
 end
