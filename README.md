@@ -32,6 +32,14 @@ cd Advanced-Building-Blocks-Enumerables
 
 Type `ruby main.rb` in terminal
 
+## Testing Instructions
+
+In order to run testing cases it's necesary to download rspec which can be downloaded [here](https://rspec.info/).
+
+- Open file.
+- On root folder run the command `rspec`.
+- Whatch the results.
+
 ## Authors
 
 👤 **Gustavo Silva de Carvalho**
@@ -45,6 +53,12 @@ Type `ruby main.rb` in terminal
 - GitHub: [johnhernandez-code](https://github.com/johnhernandez-code)
 - Twitter: [@JohnHernCode](https://twitter.com/JohnHernCode)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/john-hernandez-56a7821b8/)
+
+👤 **Luis Angulo**
+
+- GitHub: [@pipe2442](https://https://github.com/pipe2442)
+- Twitter: [@donCodigo_](https://twitter.com/donCodigo_)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/pipe2442/)
 
 ## 🤝 Contributing
 
