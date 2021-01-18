@@ -136,7 +136,7 @@ describe 'Enumerables' do
     it 'It counts how many elements correspond to the given argument' do
       expect(array2.my_count(2)).to eq(array2.count(2))
     end
-    it 'It returns the total number of elements in the range' do
+    it 'It returns the total number of elements in the range if no block is given' do
       expect(range.my_count).to eq(range.count)
     end
   end
