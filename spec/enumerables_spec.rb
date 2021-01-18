@@ -6,9 +6,6 @@ HIGHEST_VALUE = 9
 
 describe 'Enumerables' do
   # variables
-  let(:hash) { { one: 1, two: 2, three: 3 } }
-
-  let(:array1) { Array.new(ARRAY_SIZE) { rand(LOWEST_VALUE...HIGHEST_VALUE) } }
   let(:array2) { [1, 2, 3, 4, 5, 6] }
   let(:true_array) { [1, 2i, 3.14] }
   let(:false_array) { [nil, false, true, 99] }
@@ -43,13 +40,13 @@ describe 'Enumerables' do
     end
   end
 
-  describe '#my_all' do
+  describe '#my_all?' do
     it 'It checks all the elements in the array' do
       expect(array2.my_all? { |e| e.is_a?(Integer) }).to eq(array2.all? { |e| e.is_a?(Integer) })
     end
   end
 
-  describe '#my_any' do
+  describe '#my_any?' do
     it 'It is checking if there are any symbols' do
       expect(array2.my_any? { |e| e.is_a?(Symbol) }).to eq(array2.any? { |e| e.is_a?(Symbol) })
     end
@@ -61,15 +58,45 @@ describe 'Enumerables' do
     end
   end
 
-  describe 'my_none' do
+  describe '#my_none?' do
     it 'It checks if the current element is a symbol' do
       expect(array2.my_none? { |e| e.is_a?(Symbol) }).to eq(array2.none? { |e| e.is_a?(Symbol) })
     end
   end
-  
-  describe 'my_count' do
+
+  describe '#my_count' do
     it 'It counts how many elements correspond to the given argument' do
       expect(array2.my_count(2)).to eq(array2.count(2))
+    end
+  end
+
+  describe '#my_map' do
+    it 'Create a new array from multplying all range elements' do
+      expect(range.my_map { |i| i * i }).to eq(range.map { |i| i * i })
+    end
+
+    it 'Create a new array from multplying all range elements' do
+      expect(array2.my_map { |i| i + i }).to eq(array2.map { |i| i + i })
+    end
+  end
+
+  describe '#my_inject' do
+    it 'Add all elements by accepting block' do
+      expect(array2.my_inject { |sum, n| sum + n }).to eq(array2.inject { |sum, n| sum + n })
+    end
+
+    it 'Accept symbol as argument' do
+      expect(array2.my_inject(:*)).to eq(array2.inject(:*))
+    end
+
+    it 'Accept initail value and operator' do
+      expect(array2.my_inject(20, :*)).to eq(array2.inject(20, :*))
+    end
+  end
+
+  describe '#multiply_els' do
+    it 'Multiply all elements and return the result' do
+      expect(multiply_els(array2)).to eq(array2.my_inject(:*))
     end
   end
 end
