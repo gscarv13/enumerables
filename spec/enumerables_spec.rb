@@ -79,6 +79,9 @@ describe 'Enumerables' do
     it 'Return false if pattern do not match all' do
       expect(array2.my_all?(3)).to eq(array2.all?(3))
     end
+    it 'Return true if all elements are true' do
+      expect(array_all_true.my_all?).to eq(array_all_true.all?)
+    end
   end
 
   describe '#my_any?' do
@@ -88,8 +91,20 @@ describe 'Enumerables' do
     it 'Checks if there is any false block' do
       expect(range.my_any?(&false_block)).to eq(range.any?(&false_block))
     end
-    it 'Checks if there is a false array' do
+    it 'Checks if there is a falsy element in the array' do
       expect(false_array.my_any?).to eq(false_array.any?)
+    end
+    it 'Checks if any element match the RegEx pattern' do
+      expect(words.my_any?(/d/)).to eq(words.any?(/d/))
+    end
+    it 'Checks if any element match the given pattern' do
+      expect(words.my_any?('cat')).to eq(words.any?('cat'))
+    end
+    it 'Checks if any element match the given pattern' do
+      expect(array2.my_any?(2)).to eq(array2.any?(2))
+    end
+    it 'Returns true if all elements are falsy' do
+      expect(falsy_array.my_any?).to eq(falsy_array.any?)
     end
   end
 
