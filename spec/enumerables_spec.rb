@@ -6,6 +6,7 @@ HIGHEST_VALUE = 9
 
 describe 'Enumerables' do
   # variables
+  let(:hash) { { one: 1, two: 2, three: 3 } }
   let(:array2) { [1, 2, 3, 4, 5, 6] }
   let(:true_array) { [1, 2i, 3.14] }
   let(:false_array) { [nil, false, true, 99] }
@@ -23,11 +24,23 @@ describe 'Enumerables' do
     it 'Loop through the array and multiply each element' do
       expect(array2.my_each { |i| p i }).to be(array2.each { |i| p i })
     end
+    it 'Return enumerator when no block is given' do
+      expect(array2.my_each.inspect).to eq(array2.to_enum(:my_each).inspect)
+    end
+    it 'Expect to work with ranges' do
+      expect(range.my_each { |i| p i }).to be(range.each { |i| p i })
+    end
   end
 
   describe '#my_each_with_index' do
     it 'Print the actual element and its index' do
       expect(array2.my_each_with_index { |e, i| p e, i }).to be(array2.each_with_index { |e, i| p e, i })
+    end
+    it 'Return enumerator when no block is given' do
+      expect(array2.my_each_with_index.inspect).to eq(array2.to_enum(:my_each_with_index).inspect)
+    end
+    it 'Expect to work with ranges' do
+      expect(range.my_each_with_index { |i| p i }).to be(range.each_with_index { |i| p i })
     end
   end
 
