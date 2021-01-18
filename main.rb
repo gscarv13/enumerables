@@ -1,4 +1,4 @@
-require_relative 'enumerables'
+require_relative 'lib/enumerables'
 
 array_test = [1, 2, 3, 4, 5, 6]
 obj_test = { one: 1, two: 2, three: 3 }
