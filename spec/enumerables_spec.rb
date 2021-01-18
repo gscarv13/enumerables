@@ -1,3 +1,4 @@
+# rubocop: disable Lint/RedundantWithIndex
 require_relative '../lib/enumerables'
 
 ARRAY_SIZE = 100
@@ -45,6 +46,9 @@ describe 'Enumerables' do
   end
 
   describe '#my_select' do
+    it 'Return enumerator when no block is given' do
+      expect(array2.my_select.inspect).to eq(array2.to_enum(:my_select).inspect)
+    end
     it 'Select even numbers' do
       expect(array2.my_select(&:even?)).to eq(array2.select(&:even?))
     end
@@ -56,6 +60,24 @@ describe 'Enumerables' do
   describe '#my_all?' do
     it 'It checks all the elements in the array' do
       expect(array2.my_all? { |e| e.is_a?(Integer) }).to eq(array2.all? { |e| e.is_a?(Integer) })
+    end
+    it 'Return true if all elements are truthy' do
+      expect(array2.my_all?).to eq(array2.all?)
+    end
+    it 'Return false if not all elements are truthy' do
+      expect(false_array.my_all?).to eq(false_array.all?)
+    end
+    it 'Return true if all elements are falsy' do
+      expect(falsy_array.my_all?).to eq(falsy_array.all?)
+    end
+    it 'Return true if RegEx is found' do
+      expect(words.my_all?(/d/)).to eq(words.all?(/d/))
+    end
+    it 'Return false if RegEx is not found' do
+      expect(words.my_all?(/o/)).to eq(words.all?(/o/))
+    end
+    it 'Return false if pattern do not match all' do
+      expect(array2.my_all?(3)).to eq(array2.all?(3))
     end
   end
 
@@ -113,3 +135,5 @@ describe 'Enumerables' do
     end
   end
 end
+
+# rubocop: enable Lint/RedundantWithIndex
